@@ -11,7 +11,7 @@ export default function ProviderServiceDetail() {
 
   useEffect(() => {
     const loadService = async () => {
-      const res = await fetch(`http://localhost:3001/services/${id}`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/services/${id}`);
       const data = await res.json();
       setService(data);
     };
@@ -26,7 +26,7 @@ export default function ProviderServiceDetail() {
   }
 
   const handleDelete = async () => {
-    await fetch(`http://localhost:3001/services/${id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/services/${id}`, {
       method: "DELETE",
     });
 
@@ -38,8 +38,8 @@ export default function ProviderServiceDetail() {
     ? service.img.startsWith("http")
       ? service.img
       : service.img.startsWith("/")
-      ? `http://localhost:3001${service.img}`
-      : `http://localhost:3001/uploads/${service.img}`
+      ? `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}${service.img}`
+      : `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}${service.img}`
     : "https://via.placeholder.com/600x400?text=Sin+Imagen";
 
   return (
