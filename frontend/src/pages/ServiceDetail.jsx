@@ -12,7 +12,7 @@ export default function ServiceDetail() {
   const { user } = useAuth();
 
   useEffect(() => {
-    fetch(`http://localhost:3001/services/${id}`)
+    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/services/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
@@ -36,8 +36,8 @@ export default function ServiceDetail() {
     ? service.img.startsWith("http")
       ? service.img
       : service.img.startsWith("/")
-      ? `http://localhost:3001${service.img}`
-      : `http://localhost:3001/uploads/${service.img}`
+      ? `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}${service.img}`
+      : `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/uploads/${service.img}`
     : "https://via.placeholder.com/600x400?text=Sin+Imagen";
 
   // === Navegación al formulario de reserva ===
