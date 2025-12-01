@@ -39,7 +39,7 @@ export default function ProviderServiceDetail() {
       ? service.img
       : service.img.startsWith("/")
       ? `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}${service.img}`
-      : `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}${service.img}`
+      : `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/uploads/${service.img}`
     : "https://via.placeholder.com/600x400?text=Sin+Imagen";
 
   return (
