@@ -42,7 +42,7 @@ export default function CreateService() {
     formData.append("providerId", user.id);
 
     try {
-      const res = await fetch("http://localhost:3001/services", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/services`, {
         method: "POST",
         body: formData,
       });
