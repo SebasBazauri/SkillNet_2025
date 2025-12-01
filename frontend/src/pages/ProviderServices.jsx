@@ -23,7 +23,7 @@ export default function ProviderServices() {
       setLoading(true);
       try {
         const res = await fetch(
-          `http://localhost:3001/provider/services/${user.id}?page=${page}&limit=9`
+          `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/provider/services/${user.id}?page=${page}&limit=9`
         );
         const data = await res.json();
         setServices(data.services);
@@ -84,8 +84,8 @@ export default function ProviderServices() {
                 ? s.img.startsWith("http")
                   ? s.img
                   : s.img.startsWith("/")
-                  ? `http://localhost:3001${s.img}`
-                  : `http://localhost:3001/uploads/${s.img}`
+                  ? `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}${s.img}`
+                  : `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/uploads/${s.img}`
                 : "https://via.placeholder.com/300x200?text=Sin+Imagen";
 
               return (
