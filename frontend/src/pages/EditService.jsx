@@ -19,7 +19,7 @@ export default function EditService() {
   useEffect(() => {
     const loadService = async () => {
       try {
-        const res = await fetch(`http://localhost:3001/services/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/services/${id}`);
         const data = await res.json();
 
         setForm({
@@ -30,7 +30,7 @@ export default function EditService() {
         });
 
         if (data.img) {
-          setPreview(`http://localhost:3001/uploads/${data.img}`);
+          setPreview(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/uploads/${data.img}`);
         }
 
       } catch (err) {
@@ -66,7 +66,7 @@ export default function EditService() {
     if (image) fd.append("image", image);
 
     try {
-      const res = await fetch(`http://localhost:3001/services/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/services/${id}`, {
         method: "PUT",
         body: fd,
       });
