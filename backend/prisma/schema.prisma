@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./skillnet.db"
+}
+
+// =======================
+// ENUMS
+// =======================
+enum Role {
+  CLIENT
+  PROVIDER
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+// =======================
+// MODELOS
+// =======================
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  avatarUrl String?
+  role      Role     @default(CLIENT)
+  createdAt DateTime @default(now())
+
+  services             Service[]
+  reservations         Reservation[]   @relation("UserReservations")
+  providerReservations Reservation[]   @relation("ProviderReservations")
+  paymentMethods       PaymentMethod[]
+  reviews              Review[]
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  provider    User     @relation(fields: [providerId], references: [id])
+  providerId  Int
+  title       String
+  subtitle    String?
+  description String?
+  img         String?
+  category    String?
+  price       Float?
+  available   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  reservations Reservation[]
+  reviews      Review[]
+
+  @@index([providerId], name: "idx_service_provider")
+}
+
+model Reservation {
+  id         Int               @id @default(autoincrement())
+  serviceId  Int
+  userId     Int
+  providerId Int
+  startAt    DateTime
+  notes      String?
+  status     ReservationStatus @default(PENDING)
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  service  Service @relation(fields: [serviceId], references: [id])
+  User     User    @relation("UserReservations", fields: [userId], references: [id])
+  provider User    @relation("ProviderReservations", fields: [providerId], references: [id])
+}
+
+model PaymentMethod {
+  id        Int     @id @default(autoincrement())
+  user      User    @relation(fields: [userId], references: [id])
+  userId    Int
+  type      String // e.g., card
+  last4     String?
+  brand     String?
+  metadata  Json?
+  isDefault Boolean @default(false)
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  service   Service  @relation(fields: [serviceId], references: [id])
+  serviceId Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+}

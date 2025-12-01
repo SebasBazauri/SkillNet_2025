@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Evita scroll lateral */
+html, body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  /* Bloquea rebote hacia ARRIBA y ABAJO */
+  overscroll-behavior-y: none;
+  
+  /* Corrige arrastres bruscos en móvil */
+  touch-action: pan-y;
+}
+
+/* Fondo y fuente global */
+body {
+  @apply bg-gray-50 text-gray-900;
+}
