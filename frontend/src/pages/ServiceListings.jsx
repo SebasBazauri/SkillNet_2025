@@ -77,8 +77,8 @@ export default function ServiceListings() {
             ? service.img.startsWith("http")
               ? service.img
               : service.img.startsWith("/")
-              ? `http://localhost:3001${service.img}`
-              : `http://localhost:3001/uploads/${service.img}`
+              ? `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}${service.img}`
+              : `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/uploads/${service.img}`
             : "https://via.placeholder.com/300x200?text=Sin+Imagen";
 
           return (
