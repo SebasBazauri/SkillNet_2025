@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
 
   // ✅ Login
   const login = async (email, password) => {
-    const res = await fetch("http://localhost:3001/auth/login", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -32,7 +32,7 @@ export function AuthProvider({ children }) {
 
   // ✅ Signup
   const signup = async (name, email, password, role) => {
-    const res = await fetch("http://localhost:3001/auth/register", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, password, role }),
