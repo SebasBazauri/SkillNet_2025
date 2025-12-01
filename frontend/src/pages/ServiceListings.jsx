@@ -27,7 +27,7 @@ export default function ServiceListings() {
   useEffect(() => {
     async function fetchServices() {
       try {
-        const res = await fetch("http://localhost:3001/services");
+        const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/services`);
         const data = await res.json();
         setServices(data);
         setFiltered(data);
